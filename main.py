@@ -64,7 +64,7 @@ def move_data_center_sparta_page():
     driver.get(Com.main_url_path + Com.dataCenter_sparta_url_path)
 
     # 특정 상품 가져오기
-    get_product(8_000)
+    get_product(4_000)
 
 
 def move_data_center_page():
@@ -162,7 +162,6 @@ def send_smart_store(cnt):
     선택된 상품 스마트 스토어로 보내기
     :return:
     """
-    # driver.find_element(By.XPATH, "//div[@onclick='smartstore_download()']").click()
     elem = driver.find_element(By.XPATH, "//div[@onclick='smartstore_download()']")
     driver.execute_script("arguments[0].scrollIntoView(true);", elem)
     elem.click()
@@ -181,6 +180,10 @@ def send_smart_store(cnt):
         print("alert Fail::", err)
         Slack.send_slack_message('스마트스토어에 업로드를 실패하였습니다.에러메세지: {0}'.format(err))
         pass
+    finally:
+        driver.implicitly_wait(10)
+        # 브라우저 종료
+        driver.quit()
 
 
 def input_login_text():
